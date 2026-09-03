@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+    <h1>Design it together. Vote on it. Build it for real.</h1>
+    <p>IML is an open source design competition. Teams design big engineering projects, the community votes and improves them, and the best designs get built as physical prototypes.</p>
+</section>
+
+<section class="project-grid">
+    <% projects.forEach(function(project) { %>
+        <a href="/<%= project.slug %>" class="project-card <%= project.status %>">
+            <h2><%= project.name %></h2>
+            <% if (project.status === 'coming_soon') { %>
+                <span class="badge">Coming Soon</span>
+            <% } else { %>
+                <span class="badge live">Live</span>
+            <% } %>
+        </a>
+    <% }); %>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+
+<section class="component-header">
+    <p class="breadcrumb"><a href="/<%= project.slug %>"><%= project.name %></a> / <%= component.name %></p>
+    <h1><%= component.name %></h1>
+    <p><%= component.description %></p>
+</section>
+
+<section class="sprint-placeholder">
+    <p>Sprints and submitted designs for this component will show up here once the admin panel is in place.</p>
+</section>
+
+<%- include('partials/footer') %>

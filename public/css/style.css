@@ -1,0 +1,193 @@
+:root {
+    --navy: #14213D;
+    --blue-line: #8EC5FF;
+    --paper: #FEFCE8;
+    --graphite: #22252B;
+    --amber: #F2A007;
+    --brass: #B5793B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    color: var(--graphite);
+    background: var(--paper);
+    line-height: 1.55;
+}
+
+h1, h2, h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+/* ===== HEADER ===== */
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 2rem;
+    background: var(--navy);
+    border-bottom: 1px solid rgba(142, 197, 255, 0.25);
+}
+
+.site-header .logo {
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+}
+
+.site-header nav {
+    display: flex;
+    align-items: center;
+}
+
+.site-header nav a {
+    color: var(--blue-line);
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.site-header nav a:hover { color: #fff; }
+
+.site-header nav a.btn {
+    background: var(--amber);
+    color: var(--navy);
+    padding: 0.45rem 1rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.site-header nav a.btn:hover { color: var(--navy); opacity: 0.9; }
+
+main { max-width: 980px; margin: 0 auto; padding: 0 2rem; }
+
+/* ===== HERO ===== */
+
+.hero {
+    background: var(--navy);
+    background-image:
+        linear-gradient(rgba(142, 197, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142, 197, 255, 0.12) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: #fff;
+    text-align: left;
+    padding: 4rem 2rem;
+    margin: 0 calc(-50vw + 50%);
+    padding-left: calc(50vw - 490px + 2rem);
+    padding-right: calc(50vw - 490px + 2rem);
+}
+
+.hero h1 {
+    font-size: 2.25rem;
+    max-width: 620px;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    color: var(--blue-line);
+    max-width: 540px;
+    font-size: 1.05rem;
+}
+
+/* ===== CARDS ===== */
+
+.project-grid, .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+}
+
+.project-card, .component-card {
+    display: block;
+    padding: 1.4rem;
+    background: #fff;
+    border: 1px solid rgba(34, 37, 43, 0.15);
+    border-radius: 2px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease;
+}
+
+.project-card:hover, .component-card:hover {
+    border-color: var(--navy);
+}
+
+.project-card h2, .component-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+}
+
+.component-card p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--brass);
+}
+
+.badge.live { color: var(--amber); }
+
+/* ===== PAGE HEADERS ===== */
+
+.project-header, .component-header {
+    padding-top: 2.5rem;
+}
+
+.breadcrumb { color: #777; margin-bottom: 0.5rem; font-size: 0.9rem; }
+.breadcrumb a { color: #777; }
+
+.sprint-placeholder {
+    border: 1px dashed rgba(34, 37, 43, 0.25);
+    padding: 1.5rem;
+    color: #666;
+    font-size: 0.95rem;
+    margin: 1.5rem 0 3rem;
+}
+
+/* ===== BUTTONS ===== */
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    background: var(--amber);
+    color: var(--navy);
+    font-weight: 600;
+    padding: 0.6rem 1.3rem;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+/* ===== COMING SOON / PLACEHOLDER ===== */
+
+.coming-soon, .placeholder {
+    padding: 4rem 0;
+}
+
+.coming-soon h1, .placeholder h1 { margin-bottom: 0.5rem; }
+.coming-soon p, .placeholder p { color: #555; max-width: 480px; margin-top: 0.75rem; }
+
+/* ===== FOOTER ===== */
+
+.site-footer {
+    text-align: left;
+    padding: 2rem;
+    color: #888;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(34, 37, 43, 0.1);
+    margin-top: 2rem;
+}

@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+
+<section class="project-header">
+    <h1><%= project.name %></h1>
+</section>
+
+<section class="component-grid">
+    <% components.forEach(function(component) { %>
+        <a href="/<%= project.slug %>/<%= component.slug %>" class="component-card">
+            <h3><%= component.name %></h3>
+            <p><%= component.description %></p>
+        </a>
+    <% }); %>
+</section>
+
+<%- include('partials/footer') %>
