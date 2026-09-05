@@ -1,16 +1,85 @@
 <%- include('partials/header') %>
 
-<section class="project-header">
+<div class="sheethead">
+    <span class="code mono">SHEET 03</span>
     <h1><%= project.name %></h1>
-</section>
+    <span class="kind mono">PROJECT PAGE</span>
+</div>
 
-<section class="component-grid">
+<div class="grid g2 align-start">
+    <div>
+        <span class="eyebrow mono">PROJECT 01 / <%= project.name.toUpperCase() %></span>
+        <h1 style="font-size: 1.5rem; margin-bottom: 0.6rem;"><%= project.name %></h1>
+        <p style="font-size: 0.9rem; line-height: 1.55; color: var(--body-text); margin-bottom: 0.9rem;"><%= project.summary %></p>
+        <div class="spec">
+            <div class="hd mono">PROJECT META</div>
+            <div class="row"><span class="k mono">Status</span><span class="v">Round 01 — open</span></div>
+            <div class="row"><span class="k mono">Components</span><span class="v"><%= components.length %> open for design</span></div>
+            <div class="row"><span class="k mono">Submission deadline</span><span class="v"><%= sprintInfo.deadline %></span></div>
+            <div class="row"><span class="k mono">Voting closes</span><span class="v"><%= sprintInfo.votingDeadline %></span></div>
+            <div class="row"><span class="k mono">Analysis</span><span class="v"><%= project.analysis %></span></div>
+            <div class="row"><span class="k mono">Licence</span><span class="v">Open source</span></div>
+        </div>
+    </div>
+    <div class="figure">
+        <img src="/images/cutaway-duotone.png" alt="<%= project.name %> cutaway render">
+        <div class="cap mono">FIG. 02 — FULL ASSEMBLY · REFERENCE RENDER, NOT FINAL DESIGN</div>
+    </div>
+</div>
+
+<div class="banner" style="margin-top: 1.25rem;">
+    <div style="display:flex; align-items:baseline; gap:0.6rem; margin-bottom: 0.4rem; flex-wrap: wrap;">
+        <span class="stamp mono">ROUND 01 OPEN</span>
+        <span class="deadline-text">Deadline: <%= sprintInfo.deadline %></span>
+    </div>
+    <p>You're not expected to have a finished, buildable design yet. Submit what you have, the community refines it from there.</p>
+    <p class="expects-label mono">THIS ROUND EXPECTS</p>
+    <ul class="ticks">
+        <% sprintInfo.expectations.forEach(function(item) { %>
+            <li><span><%= item %></span></li>
+        <% }); %>
+    </ul>
+</div>
+
+<span class="eyebrow mono" style="margin-top: 1.25rem; display: block;">SEC. 01 — PROJECT DOCUMENTS</span>
+<div class="grid g2">
+    <div class="card" style="padding: 0;">
+        <div style="display:flex; justify-content:space-between; gap:0.6rem; background: var(--blue-band); border-bottom: 1px solid var(--navy); padding: 0.5rem 0.9rem;">
+            <span class="mono" style="font-size:0.7rem; font-weight:600; letter-spacing:0.14em; color: var(--navy);">PLAIN LANGUAGE</span>
+            <span class="mono" style="font-size:0.7rem; letter-spacing:0.1em; color: var(--navy);">~5 MIN READ</span>
+        </div>
+        <div style="padding: 1rem;">
+            <h3>The Hydrowheel — Overview</h3>
+            <p style="margin-bottom: 0.6rem;">What the machine is and why it might work, with no equations. Start here if you're new to the project.</p>
+            <a href="/docs/hydrowheel-overview-public.txt" class="btn" style="font-size: 0.7rem;">Read the overview</a>
+        </div>
+    </div>
+    <div class="card" style="padding: 0;">
+        <div style="display:flex; justify-content:space-between; gap:0.6rem; background: var(--amber-band); border-bottom: 1px solid var(--navy); padding: 0.5rem 0.9rem;">
+            <span class="mono" style="font-size:0.7rem; font-weight:600; letter-spacing:0.14em; color: var(--navy);">ENGINEERING</span>
+            <span class="mono" style="font-size:0.7rem; letter-spacing:0.1em; color: var(--navy);">v1.1 · FULL DERIVATION</span>
+        </div>
+        <div style="padding: 1rem;">
+            <h3>Hydrowheel Buoyancy Engine — Technical Overview</h3>
+            <p style="margin-bottom: 0.6rem;">Phased first-principles derivation with validation gates at each stage. XFOIL plus analytical methods, no CFD.</p>
+            <a href="/docs/hydrowheel-overview-technical.txt" class="btn" style="font-size: 0.7rem;">Read the technical overview</a>
+        </div>
+    </div>
+</div>
+
+<span class="eyebrow mono" style="margin-top: 1.25rem; display: block;">SEC. 02 — COMPONENT CHALLENGES · <%= components.length %> OPEN, 0 BUILD-READY</span>
+<div class="grid g2">
     <% components.forEach(function(component) { %>
-        <a href="/<%= project.slug %>/<%= component.slug %>" class="component-card">
+        <a href="/<%= project.slug %>/<%= component.slug %>" class="card" style="text-decoration:none; color:inherit;">
+            <div class="card-meta">
+                <span class="mono" style="font-size:0.7rem; letter-spacing:0.14em; color:var(--muted);"><%= component.code %></span>
+                <span class="pill plain">Concept</span>
+            </div>
             <h3><%= component.name %></h3>
-            <p><%= component.description %></p>
+            <p><%= component.summary %></p>
+            <div class="footline mono">0 SUBMISSIONS · <%= component.questions.length %> OPEN QS</div>
         </a>
     <% }); %>
-</section>
+</div>
 
 <%- include('partials/footer') %>
