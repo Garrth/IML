@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<div class="sheethead">
+    <span class="code mono">SHEET 04</span>
+    <h1><%= component.name %></h1>
+    <span class="kind mono">COMPONENT CHALLENGE</span>
+</div>
+
+<p class="mono" style="font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.9rem;">
+    <a href="/<%= project.slug %>" style="color: var(--muted);"><%= project.name.toUpperCase() %></a> / <%= component.name.toUpperCase() %> / ROUND 01
+</p>
+
+<div class="stage-tabs">
+    <div class="tab active">Concept</div>
+    <div class="tab">Refined</div>
+    <div class="tab">Build-Ready</div>
+</div>
+
+<div class="grid g2 align-start">
+    <div>
+        <div class="banner" style="margin-bottom: 1rem;">
+            <div style="display:flex; align-items:baseline; gap:0.6rem; margin-bottom: 0.4rem; flex-wrap: wrap;">
+                <span class="stamp mono">ROUND 01 OPEN</span>
+                <span class="deadline-text">Deadline: <%= sprintInfo.deadline %></span>
+            </div>
+            <p>Votes are private while the round is open. Only aggregate counts go public after the voting deadline, never who voted for what.</p>
+        </div>
+
+        <span class="eyebrow mono">SEC. 01 — THE PROBLEM</span>
+        <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;"><%= component.problem %></p>
+
+        <span class="eyebrow mono">SEC. 02 — OPEN QUESTIONS</span>
+        <div class="spec">
+            <% component.questions.forEach(function(q, i) { %>
+                <div class="row"><span class="k mono" style="color: var(--brass);">Q<%= i + 1 %></span><span class="v wide" style="font-family: 'Space Grotesk', sans-serif; font-weight: 500;"><%= q %></span></div>
+            <% }); %>
+        </div>
+    </div>
+
+    <div>
+        <div class="figure" style="margin-bottom: 0.9rem;">
+            <img src="<%= component.image %>" alt="<%= component.name %> reference render">
+            <div class="cap mono">FIG. 03 — <%= component.figureCaption %> · REFERENCE ONLY</div>
+        </div>
+        <div class="spec" style="margin-bottom: 0.9rem;">
+            <div class="hd mono">COMPONENT SPEC</div>
+            <div class="row"><span class="k mono">Component</span><span class="v"><%= component.code %> <%= component.name %></span></div>
+            <div class="row"><span class="k mono">Stage</span><span class="v">Concept</span></div>
+            <div class="row"><span class="k mono">Submissions</span><span class="v">0</span></div>
+            <div class="row"><span class="k mono">Open questions</span><span class="v"><%= component.questions.length %></span></div>
+            <div class="row"><span class="k mono">Format</span><span class="v">Images + description</span></div>
+        </div>
+        <div style="border: 1px solid var(--navy); background: var(--amber-band); padding: 1rem;">
+            <h3 style="font-size: 1.05rem; margin-bottom: 0.4rem;">Submit a design</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 0.75rem;">Images or sketches plus a written description. Everything goes public the moment the deadline hits.</p>
+            <a href="/pages/signup" style="display:block; background: var(--navy); color: #fff; font-size: 0.9rem; font-weight: 600; padding: 0.6rem; text-align: center; text-decoration: none;">Sign up to submit</a>
+        </div>
+    </div>
+</div>
+
+<span class="eyebrow mono" style="margin-top: 1.25rem; display: block;">SEC. 03 — SUBMITTED DESIGNS · 0 SUBMISSIONS</span>
+<div class="empty-state">
+    No designs submitted yet for this component. Sign up and be the first.
+</div>
+
+<%- include('partials/footer') %>

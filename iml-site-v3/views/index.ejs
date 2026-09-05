@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+
+<div class="sheethead">
+    <span class="code mono">SHEET 01</span>
+    <h1>Home</h1>
+    <span class="kind mono">LANDING</span>
+</div>
+
+<div class="hero-box">
+    <span class="eyebrow mono">/// OPEN ENGINEERING · EST. 2026</span>
+    <h1>Big engineering projects. Real teams. Real prototypes.</h1>
+    <p class="lede">An open source design competition for projects that take a team, real engineering skill, and funding to actually build, not something one person finishes in a weekend. The community votes and improves the designs, and the best ones get built for real.</p>
+    <a href="/hydrowheel" class="btn primary">See the live project &rarr;</a>
+    <a href="/why-iml" class="btn">Why IML</a>
+
+    <div class="stat-row">
+        <div class="stat"><div class="num"><%= stats.projects %></div><div class="label mono">PROJECTS</div></div>
+        <div class="stat"><div class="num"><%= stats.openComponents %></div><div class="label mono">OPEN COMPONENTS</div></div>
+        <div class="stat"><div class="num"><%= stats.roundCloses %></div><div class="label mono">ROUND 01 CLOSES</div></div>
+        <div class="stat"><div class="num">100%</div><div class="label mono">OPEN SOURCE</div></div>
+    </div>
+</div>
+
+<div class="grid g2 align-start" style="margin-top: 1.25rem;">
+    <div class="figure">
+        <img src="/images/structure-duotone.png" alt="Hydrowheel assembly render">
+        <div class="cap mono">FIG. 01 — HYDROWHEEL / ASSEMBLY · REV A, CAD NOT FINAL</div>
+    </div>
+    <div>
+        <span class="eyebrow mono">SEC. 01 — HOW IT WORKS</span>
+        <p style="font-size: 0.9rem; color: var(--body-text); margin-bottom: 0.75rem;">Every project breaks into components. Every component runs sprints. Every design moves through the same three stages, driven by the community, not a single judge's opinion.</p>
+        <div class="spec">
+            <div class="hd mono">THREE STAGES</div>
+            <div class="row"><span class="k mono">01 / Concept</span><span class="v wide">Rough first pass; weeded out fast if it isn't working</span></div>
+            <div class="row"><span class="k mono">02 / Refined</span><span class="v wide">Community has converged; details locking in</span></div>
+            <div class="row"><span class="k mono">03 / Build-Ready</span><span class="v wide">Detailed enough to hand to a fabricator</span></div>
+        </div>
+    </div>
+</div>
+
+<span class="eyebrow mono" style="margin-top: 1.25rem; display: block;">SEC. 02 — PROJECTS · <%= projects.length %> TOTAL, <%= projects.filter(p => p.status === 'live').length %> LIVE</span>
+<div class="grid g2">
+    <% projects.forEach(function(project) { %>
+        <% if (project.status === 'live') { %>
+            <a href="/<%= project.slug %>" class="card" style="text-decoration:none; color:inherit;">
+                <div class="card-meta">
+                    <span class="pill ready">&#9679; LIVE</span>
+                    <span class="mono" style="font-size:0.7rem;color:var(--muted);">ROUND 01 · CLOSES <%= stats.roundCloses %></span>
+                </div>
+                <h3><%= project.name %></h3>
+                <p><%= project.blurb %></p>
+            </a>
+        <% } else { %>
+            <div class="card dashed">
+                <div class="card-meta"><span class="pill plain">COMING SOON</span></div>
+                <h3><%= project.name %></h3>
+                <p><%= project.blurb %></p>
+            </div>
+        <% } %>
+    <% }); %>
+</div>
+
+<%- include('partials/footer') %>
