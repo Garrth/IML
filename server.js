@@ -2,13 +2,23 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
+const ws = require('ws');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Node 20 (what meridian runs) doesn't have a native WebSocket, and Supabase's
+// realtime client needs one just to construct, even though we aren't using
+// realtime features yet. Passing the `ws` package in as the transport avoids
+// the crash. See: https://github.com/orgs/supabase/discussions/45715
 const supabase = createClient(
     process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY
+    process.env.SUPABASE_ANON_KEY,
+    {
+        realtime: {
+            transport: ws
+        }
+    }
 );
 
 app.set('view engine', 'ejs');
