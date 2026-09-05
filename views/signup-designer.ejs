@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+<div class="sheethead">
+    <span class="code mono">SHEET 06</span>
+    <h1>Sign Up — Designer</h1>
+    <span class="kind mono">TEAM ACCOUNT</span>
+</div>
+
+<% if (error) { %>
+    <div class="banner" style="margin-bottom: 1.25rem; background: #FFE4E4; border-color: #B33;"><p style="margin:0;"><%= error %></p></div>
+<% } %>
+
+<form method="POST" action="/signup/designer" class="card" style="max-width: 460px; display: grid; gap: 0.9rem;">
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">YOUR NAME</label><br>
+        <input type="text" name="name" required style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">TEAM NAME</label><br>
+        <input type="text" name="teamName" placeholder="Fine to start solo, e.g. just your name" style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">EMAIL</label><br>
+        <input type="email" name="email" required style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">PASSWORD</label><br>
+        <input type="password" name="password" required minlength="6" style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">LOCATION</label><br>
+        <input type="text" name="location" style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">SHORT BIO</label><br>
+        <textarea name="bio" rows="3" style="width:100%; padding:0.5rem; border:1px solid var(--navy); font-family: inherit;"></textarea>
+    </div>
+    <label style="font-size:0.85rem; display:flex; gap:0.5rem; align-items:flex-start;">
+        <input type="checkbox" name="terms" required style="margin-top:0.2rem;">
+        <span>I agree to the terms, including that designs submitted are open source.</span>
+    </label>
+    <button type="submit" class="btn primary">Create team account</button>
+</form>
+
+<%- include('partials/footer') %>

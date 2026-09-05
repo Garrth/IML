@@ -17,12 +17,17 @@
         <nav>
             <a href="/why-iml">Why IML</a>
             <a href="/hydrowheel">Hydrowheel</a>
-            <a href="/perfect-box">Perfect Box</a>
-            <a href="/pages/merch">Merch</a>
+            <a href="https://10spot.shop" target="_blank" rel="noopener">Merch</a>
+            <a href="/pages/community">Community</a>
             <a href="/pages/media">Media</a>
             <a href="/pages/sponsors">Sponsors</a>
-            <a href="/pages/login">Log In</a>
-            <a href="/pages/signup" class="btn">Sign Up</a>
+            <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+                <a href="/team">My Team</a>
+                <a href="/logout">Log Out</a>
+            <% } else { %>
+                <a href="/pages/login">Log In</a>
+                <a href="/pages/signup" class="btn">Sign Up</a>
+            <% } %>
         </nav>
     </header>
     <main>

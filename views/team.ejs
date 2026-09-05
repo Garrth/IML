@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+<div class="sheethead">
+    <span class="code mono">SHEET 08</span>
+    <h1>My Team</h1>
+    <span class="kind mono">TEAM MANAGEMENT</span>
+</div>
+
+<% if (error) { %>
+    <div class="banner" style="margin-bottom: 1.25rem; background: #FFE4E4; border-color: #B33;"><p style="margin:0;"><%= error %></p></div>
+<% } %>
+
+<% if (!team) { %>
+    <div class="empty-state">You're not on a team yet. This shows up automatically once you sign up as a designer.</div>
+<% } else { %>
+    <div class="spec" style="max-width: 500px; margin-bottom: 1.25rem;">
+        <div class="hd mono">TEAM</div>
+        <div class="row"><span class="k mono">Name</span><span class="v"><%= team.name %></span></div>
+        <div class="row"><span class="k mono">Members</span><span class="v"><%= members.length %></span></div>
+        <div class="row"><span class="k mono">Total points</span><span class="v"><%= totalPoints %></span></div>
+    </div>
+
+    <span class="eyebrow mono">SEC. 01 — MEMBERS</span>
+    <div class="grid g2" style="margin-bottom: 1.25rem;">
+        <% members.forEach(function(m) { %>
+            <div class="card">
+                <div class="card-meta">
+                    <h3 style="margin:0;"><%= m.name %></h3>
+                    <span class="pill plain"><%= m.points %> PTS</span>
+                </div>
+                <form method="POST" action="/team/remove-member" style="margin-top:0.5rem;">
+                    <input type="hidden" name="userId" value="<%= m.id %>">
+                    <button type="submit" class="btn" style="font-size:0.7rem;">Remove</button>
+                </form>
+            </div>
+        <% }); %>
+    </div>
+
+    <span class="eyebrow mono">SEC. 02 — ADD A TEAMMATE</span>
+    <form method="POST" action="/team/add-member" class="card" style="max-width: 420px; display:flex; gap:0.6rem;">
+        <input type="email" name="email" placeholder="their-email@example.com" required style="flex:1; padding:0.5rem; border:1px solid var(--navy);">
+        <button type="submit" class="btn primary">Add</button>
+    </form>
+    <p style="font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem;">They need to already have an IML account. If they haven't signed up yet, ask them to sign up first (as viewer or designer, either works), then add them here.</p>
+<% } %>
+
+<%- include('partials/footer') %>

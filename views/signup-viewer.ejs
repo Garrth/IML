@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<div class="sheethead">
+    <span class="code mono">SHEET 06</span>
+    <h1>Sign Up — Viewer</h1>
+    <span class="kind mono">VOTING ACCOUNT</span>
+</div>
+
+<% if (error) { %>
+    <div class="banner" style="margin-bottom: 1.25rem; background: #FFE4E4; border-color: #B33;"><p style="margin:0;"><%= error %></p></div>
+<% } %>
+
+<form method="POST" action="/signup/viewer" class="card" style="max-width: 420px; display: grid; gap: 0.9rem;">
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">NAME</label><br>
+        <input type="text" name="name" required style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">EMAIL</label><br>
+        <input type="email" name="email" required style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <div>
+        <label class="mono" style="font-size:0.75rem; letter-spacing:0.08em;">PASSWORD</label><br>
+        <input type="password" name="password" required minlength="6" style="width:100%; padding:0.5rem; border:1px solid var(--navy);">
+    </div>
+    <label style="font-size:0.85rem; display:flex; gap:0.5rem; align-items:flex-start;">
+        <input type="checkbox" name="terms" required style="margin-top:0.2rem;">
+        <span>I agree to the terms and understand voting requires a verified email and tokens from 10spot.</span>
+    </label>
+    <button type="submit" class="btn primary">Create account</button>
+</form>
+
+<%- include('partials/footer') %>
