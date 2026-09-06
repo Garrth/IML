@@ -68,6 +68,41 @@ function requireLogin(req, res, next) {
     next();
 }
 
+// Adds (or updates) someone in the shared Mailchimp audience, tagged so
+// IML subscribers can be segmented from Equitide and everything else on
+// the same list. Uses Node's built-in fetch, no extra dependency needed.
+async function subscribeToMailchimp(email, tags) {
+    const dc = process.env.MAILCHIMP_DC;
+    const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
+    const auth = Buffer.from(`anystring:${process.env.MAILCHIMP_API_KEY}`).toString('base64');
+    const url = `https://${dc}.api.mailchimp.com/3.0/lists/${audienceId}/members`;
+
+    const body = {
+        email_address: email,
+        status: 'subscribed',
+        tags: tags
+    };
+
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+
+    if (response.status === 400) {
+        // Likely already on the list, update their tags instead of failing.
+        const crypto = require('crypto');
+        const hash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex');
+        response = await fetch(`${url}/${hash}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email_address: email, status_if_new: 'subscribed', tags })
+        });
+    }
+
+    return response.ok;
+}
+
 // Hardcoded for the skeleton. Once the admin panel exists,
 // this list comes from the projects table instead.
 const PROJECTS = [
@@ -192,7 +227,7 @@ app.get('/pages/signup', (req, res) => res.render('signup-choice'));
 app.get('/pages/signup/viewer', (req, res) => res.render('signup-viewer', { error: null }));
 
 app.post('/signup/viewer', async (req, res) => {
-    const { email, password, name, terms } = req.body;
+    const { email, password, name, terms, newsletter } = req.body;
     if (!terms) return res.render('signup-viewer', { error: 'You need to agree to the terms to sign up.' });
 
     const client = makeSupabaseClient();
@@ -202,6 +237,10 @@ app.post('/signup/viewer', async (req, res) => {
     });
 
     if (error) return res.render('signup-viewer', { error: error.message });
+
+    if (newsletter) {
+        subscribeToMailchimp(email, ['IML', 'IML-Viewer']).catch(err => console.error('Mailchimp subscribe failed:', err.message));
+    }
 
     if (data.session) {
         res.cookie('iml_session', data.session.access_token, COOKIE_OPTS);
@@ -213,7 +252,7 @@ app.post('/signup/viewer', async (req, res) => {
 app.get('/pages/signup/designer', (req, res) => res.render('signup-designer', { error: null }));
 
 app.post('/signup/designer', async (req, res) => {
-    const { email, password, name, teamName, location, bio, terms } = req.body;
+    const { email, password, name, teamName, location, bio, terms, newsletter } = req.body;
     if (!terms) return res.render('signup-designer', { error: 'You need to agree to the terms to sign up.' });
 
     const client = makeSupabaseClient();
@@ -223,6 +262,10 @@ app.post('/signup/designer', async (req, res) => {
     });
 
     if (error) return res.render('signup-designer', { error: error.message });
+
+    if (newsletter) {
+        subscribeToMailchimp(email, ['IML', 'IML-Designer']).catch(err => console.error('Mailchimp subscribe failed:', err.message));
+    }
 
     if (data.session) {
         res.cookie('iml_session', data.session.access_token, COOKIE_OPTS);
@@ -288,6 +331,22 @@ app.post('/team/remove-member', requireLogin, async (req, res) => {
         await client.from('team_members').delete().eq('team_id', membership.team_id).eq('user_id', userId);
     }
     res.redirect('/team');
+});
+
+app.post('/subscribe', async (req, res) => {
+    const { email } = req.body;
+    const referer = req.get('Referer') || '/';
+    const separator = referer.includes('?') ? '&' : '?';
+
+    if (!email) return res.redirect(referer + separator + 'subscribed=error');
+
+    try {
+        const ok = await subscribeToMailchimp(email, ['IML', 'IML-Newsletter']);
+        res.redirect(referer + separator + (ok ? 'subscribed=1' : 'subscribed=error'));
+    } catch (err) {
+        console.error('Mailchimp subscribe failed:', err.message);
+        res.redirect(referer + separator + 'subscribed=error');
+    }
 });
 
 app.get('/admin', (req, res) => res.render('placeholder', { title: 'Admin (locked down later)' }));

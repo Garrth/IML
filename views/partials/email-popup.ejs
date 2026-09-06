@@ -1,0 +1,31 @@
+<div id="iml-email-popup" class="email-popup" style="display:none;">
+    <div class="email-popup-box">
+        <button type="button" class="email-popup-close" onclick="dismissImlPopup()">&times;</button>
+        <h3>Stay in the loop</h3>
+        <p>Get project updates and new challenge announcements. No spam, unsubscribe anytime.</p>
+        <form method="POST" action="/subscribe">
+            <input type="email" name="email" placeholder="you@example.com" required>
+            <button type="submit" class="btn primary">Notify me</button>
+        </form>
+    </div>
+</div>
+
+<div id="iml-email-toast" class="email-popup-toast" style="display:none;">Thanks, you're on the list.</div>
+
+<script>
+(function() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('subscribed') === '1') {
+        document.getElementById('iml-email-toast').style.display = 'block';
+    }
+    if (localStorage.getItem('imlPopupDismissed') || params.has('subscribed')) return;
+    setTimeout(function() {
+        document.getElementById('iml-email-popup').style.display = 'flex';
+    }, 4000);
+})();
+
+function dismissImlPopup() {
+    document.getElementById('iml-email-popup').style.display = 'none';
+    localStorage.setItem('imlPopupDismissed', '1');
+}
+</script>
