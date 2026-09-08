@@ -187,6 +187,14 @@ const HYDROWHEEL_COMPONENTS = [
     }
 ];
 
+const SPONSORS = [
+    {
+        name: 'Equitide',
+        url: 'https://investors.equitide.io',
+        blurb: 'A crowdfunded real estate investment platform focused on workforce housing.'
+    }
+];
+
 app.get('/', (req, res) => {
     const stats = {
         projects: PROJECTS.length,
@@ -201,7 +209,7 @@ app.get('/why-iml', (req, res) => res.render('why-iml'));
 app.get('/pages/merch', (req, res) => res.render('placeholder', { title: 'Merch' }));
 app.get('/pages/media', (req, res) => res.render('placeholder', { title: 'Content & Media' }));
 app.get('/pages/community', (req, res) => res.render('placeholder', { title: 'Community (Discord & forum coming soon)' }));
-app.get('/pages/sponsors', (req, res) => res.render('placeholder', { title: 'Sponsors' }));
+app.get('/pages/sponsors', (req, res) => res.render('sponsors', { sponsors: SPONSORS }));
 app.get('/pages/login', (req, res) => res.render('login', { error: null }));
 
 app.post('/login', async (req, res) => {

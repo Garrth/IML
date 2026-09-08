@@ -17,6 +17,7 @@
     var params = new URLSearchParams(window.location.search);
     if (params.get('subscribed') === '1') {
         document.getElementById('iml-email-toast').style.display = 'block';
+        localStorage.setItem('imlPopupDismissed', '1');
     }
     if (localStorage.getItem('imlPopupDismissed') || params.has('subscribed')) return;
     setTimeout(function() {
